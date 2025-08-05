@@ -1,1 +1,135 @@
-# cidre-allen## pandas cleaningimport pandas as pddf=pd.read_csv('data.csv') -took the datasetfill_avg=df.fillna(df.mean()) -filled missing data with mean of the columnsum_avg=fill_avg.mean() -gives summary of average marks&nbsp;print("Cleaned data:") - printing the valuesprint(fill_avg)print("Average of the cleaned data:")print(sum_avg)##exceptiondef process_excel(file_path,col):&nbsp; &nbsp; error_data=[] - initialized 2 lists&nbsp; &nbsp; data=[]&nbsp; &nbsp; for i in os.listdir(file_path): -checks each file in directory using os&nbsp; &nbsp; &nbsp; &nbsp; if i.endswith('.xlsx'): -finds excell extention files&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; try:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; df = pd.read_excel(file_path) -reads data&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; df_data = df[col]&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; data.append(df_data)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; except Exception as e:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; error_data.append(f"Error in {i}: {e}") -appends error data into the list&nbsp; &nbsp; return error_data -returns the error list---##time-complexitiyarr = [i for i in range(100000)] -takes list of 1 million numberstarget=2 - set a targets=set() - set function is used as it doesnt keep duplicatesfor i in arr: -checks from 0 to 1 million&nbsp; &nbsp; if target - i in s:&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; print("Pair found:", i, target - i)&nbsp; &nbsp; &nbsp; &nbsp; break&nbsp; &nbsp; s.add(i) -if not found, added to set---##oopsclass Book: -made class for books&nbsp; &nbsp; def __init__(self, title,author,availablility_status):&nbsp; &nbsp; &nbsp; &nbsp; self.title = title&nbsp; &nbsp; &nbsp; &nbsp; self.author = author&nbsp; &nbsp; &nbsp; &nbsp; self.availablility_status = availablility_status&nbsp; &nbsp; def borrow(self): -gave two functions for returning and borrowing&nbsp; &nbsp; &nbsp; &nbsp; if self.availablility_status:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; self.availablility_status = False&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; print("You borrowed '{self.title}' by '{self.author}'")&nbsp; &nbsp; &nbsp; &nbsp; else:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; print("'{self.title}' is currently not available.")&nbsp; &nbsp; def return_b(self):&nbsp; &nbsp; &nbsp; &nbsp; self.availablility_status = True&nbsp; &nbsp; &nbsp; &nbsp; print("You returned '{self.title}' by '{self.author}'")class Library: -made a class for library&nbsp; &nbsp; def __init__(self):&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; self.books = []&nbsp; &nbsp; def add(self, book):&nbsp; &nbsp; &nbsp; &nbsp; self.books.append(book)&nbsp; &nbsp; def find_b(self, title):&nbsp; &nbsp; &nbsp; &nbsp; for i in self.books:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if i.title == title:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return i&nbsp; &nbsp; &nbsp; &nbsp; return None&nbsp; &nbsp;&nbsp;title=input("Enter the book title: ")author=input("Enter the book author: ")obj= Book(title, author, True) -took the input and set availability as true and made an objectlib= Library() -made object for librarylib.add(obj)title= input("Enter the book title to borrow: ") -code to borrow or returnbook = lib.find_b(title)&nbsp;if book:&nbsp; &nbsp; book.borrow()else:&nbsp; &nbsp; print("Book not found in the library.")title= input("Enter the book title to return: ")book = lib.find_b(title)if book:&nbsp; &nbsp; book.return_b()##apiimport pandas as pd -imported neccesery packagesimport requestsimport timeapi_url = "url" -taking the url for apiweather_info = [] -creates an empty listwhile True: -inside loop&nbsp; &nbsp; response = requests.get(api_url) -takes response from utl&nbsp; &nbsp; w_d = response.json() -convert this to python dictionary&nbsp; &nbsp; dic = {'temp': w_d[temp],'humidity': w_d[humidity]} -taking neccesery values ie tempreature and humidity&nbsp; &nbsp; data= pd.DataFrame(dic) -made it as a dataframe&nbsp;&nbsp; &nbsp; weather_info.append([data]) -append to an variable&nbsp; &nbsp; weather_info=weather_info.to_csv("weather_info.csv") -converts and store it in csv&nbsp; &nbsp; time.sleep(3600) -takes value after 1 hour--##parsingwith open('C:/Users/hp/Downloads/sample_logs.txt') as file: -opens file&nbsp; &nbsp; for i in file: -checks all file&nbsp; &nbsp; &nbsp; &nbsp; if 'ERROR' in i: -if 'error' in line prints the line&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; print(i)&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+# cidre-allen
+
+## Pandas Cleaning
+
+```python
+import pandas as pd
+
+df = pd.read_csv('data.csv')  # Took the dataset
+fill_avg = df.fillna(df.mean())  # Filled missing data with mean of the column
+sum_avg = fill_avg.mean()  # Gives summary of average marks
+
+print("Cleaned data:")
+print(fill_avg)
+print("Average of the cleaned data:")
+print(sum_avg)
+```
+
+## Exception Handling in Excel Processing
+
+```python
+import pandas as pd
+import os
+
+def process_excel(file_path, col):
+    error_data = []  # Initialized list for errors
+    data = []  # List to store valid data
+    
+    for i in os.listdir(file_path):  # Checks each file in directory using os
+        if i.endswith('.xlsx'):  # Finds Excel files
+            try:
+                df = pd.read_excel(os.path.join(file_path, i))  # Reads data
+                df_data = df[col]  # Extracts specific column
+                data.append(df_data)
+            except Exception as e:
+                error_data.append(f"Error in {i}: {e}")  # Appends error info
+    return error_data  # Returns the error list
+```
+
+## Time Complexity for Pair Sum
+
+```python
+arr = [i for i in range(1000000)]  # List of 1 million numbers
+target = 2  # Target value
+s = set()  # Set to store seen numbers
+
+for i in arr:
+    if target - i in s:
+        print("Pair found:", i, target - i)
+        break
+    s.add(i)
+```
+
+## OOPs - Library System
+
+```python
+class Book:
+    def __init__(self, title, author, availablility_status):
+        self.title = title
+        self.author = author
+        self.availablility_status = availablility_status
+
+    def borrow(self):
+        if self.availablility_status:
+            self.availablility_status = False
+            print(f"You borrowed '{self.title}' by '{self.author}'")
+        else:
+            print(f"'{self.title}' is currently not available.")
+
+    def return_b(self):
+        self.availablility_status = True
+        print(f"You returned '{self.title}' by '{self.author}'")
+
+class Library:
+    def __init__(self):
+        self.books = []
+
+    def add(self, book):
+        self.books.append(book)
+
+    def find_b(self, title):
+        for i in self.books:
+            if i.title == title:
+                return i
+        return None
+
+title = input("Enter the book title: ")
+author = input("Enter the book author: ")
+obj = Book(title, author, True)  # Create Book object
+lib = Library()  # Create Library object
+lib.add(obj)
+
+title = input("Enter the book title to borrow: ")
+book = lib.find_b(title)
+if book:
+    book.borrow()
+else:
+    print("Book not found in the library.")
+
+title = input("Enter the book title to return: ")
+book = lib.find_b(title)
+if book:
+    book.return_b()
+```
+
+## API - Weather Info to CSV
+
+```python
+import pandas as pd
+import requests
+import time
+
+api_url = "url"  # API endpoint
+weather_info = []  # Empty list to collect data
+
+while True:
+    response = requests.get(api_url)  # Takes response from URL
+    w_d = response.json()  # Converts JSON to Python dict
+    
+    dic = {'temp': w_d['temp'], 'humidity': w_d['humidity']}  # Extracts needed values
+    data = pd.DataFrame([dic])  # Create DataFrame from dict
+    
+    weather_info.append(dic)  # Append dictionary to list
+    
+    pd.DataFrame(weather_info).to_csv("weather_info.csv", index=False)  # Save to CSV
+    time.sleep(3600)  # Sleep for 1 hour
+```
+
+## Parsing Log Files
+
+```python
+with open('C:/Users/hp/Downloads/sample_logs.txt') as file:  # Opens file
+    for i in file:  # Checks each line
+        if 'ERROR' in i:  # If 'ERROR' in line, print the line
+            print(i)
+```
